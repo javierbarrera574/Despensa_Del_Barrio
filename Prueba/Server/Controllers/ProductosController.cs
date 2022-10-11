@@ -17,7 +17,7 @@ namespace Prueba.Server.Controllers
 
 
 
-        [HttpGet]//esta bien
+        [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
         {
             var respuesta = await context.Productos.ToListAsync();
@@ -99,7 +99,6 @@ namespace Prueba.Server.Controllers
 
             var Productos = context.Productos.Where(e => e.Id == id).FirstOrDefault();
 
-            //var proveedores = context.Proveedores.Where(m => m.Id == id).FirstOrDefaultAsync();
 
             if (Productos == null)
             {

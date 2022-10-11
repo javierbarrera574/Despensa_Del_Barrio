@@ -34,7 +34,7 @@ namespace Prueba.Server.Controllers
             {
                 context.Depositos.Add(deposito);
                 await context.SaveChangesAsync();
-                return deposito.Id;//Es devuelto con el id asignado
+                return deposito.Id;
 
             }
             catch (Exception p)
@@ -55,8 +55,8 @@ namespace Prueba.Server.Controllers
 
             var registro = context.Depositos.Where(x => x.Id == id).FirstOrDefault();
 
-            //como la categoria esta en la base de datos dentro de registro
-            //y categoria es como quiero que quede despues de hacer la modificacion
+            
+
 
             if (registro is null)
             {
@@ -64,7 +64,6 @@ namespace Prueba.Server.Controllers
             }
 
 
-            //actualizacion de los objetos que hay en la base de datos con los que hay en el cuerpo(body)
 
             registro.CodigoEstante = deposito.CodigoEstante;
             registro.CategoriaEnEstante = deposito.CategoriaEnEstante;
@@ -74,7 +73,7 @@ namespace Prueba.Server.Controllers
             try
             {
 
-                context.Depositos.Update(registro);//si mando aca dentro de update, al objeto categorias, no va a haber conexion con la base de datos
+                context.Depositos.Update(registro);
                 context.SaveChanges();
                 return Ok();
 

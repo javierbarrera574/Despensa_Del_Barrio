@@ -18,7 +18,7 @@ namespace Prueba.Server.Controllers
         }
 
 
-        [HttpGet]//esta bien
+        [HttpGet]
         public async Task<ActionResult<List<Categoria>>> Get()
         {
             var respuesta = await context.Categorias.ToListAsync();
@@ -77,8 +77,6 @@ namespace Prueba.Server.Controllers
 
             var registro = context.Categorias.Where(x => x.Id == id).FirstOrDefault();
 
-            //como la categoria esta en la base de datos dentro de registro
-            //y categoria es como quiero que quede despues de hacer la modificacion
 
             if (registro is null)
             {
@@ -86,7 +84,6 @@ namespace Prueba.Server.Controllers
             }
 
 
-            //actualizacion de los objetos que hay en la base de datos con los que hay en el cuerpo(body)
 
             registro.TipoCategoria = categorias.TipoCategoria;
             registro.CodigoCategoria = categorias.CodigoCategoria;
@@ -95,7 +92,7 @@ namespace Prueba.Server.Controllers
             try
             {
 
-                context.Categorias.Update(registro);//si mando aca dentro de update, al objeto categorias, no va a haber conexion con la base de datos
+                context.Categorias.Update(registro);
                 context.SaveChanges();
                 return Ok();
 

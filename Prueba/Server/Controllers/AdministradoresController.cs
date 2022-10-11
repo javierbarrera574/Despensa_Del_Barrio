@@ -15,7 +15,7 @@ namespace Prueba.Server.Controllers
             this.context = Context;
         }
 
-        [HttpGet]//esta bien
+        [HttpGet]
         public async Task<ActionResult<List<Administrador>>> Get()
         {
             var respuesta = await context.Administradores.ToListAsync();
@@ -53,16 +53,12 @@ namespace Prueba.Server.Controllers
 
             var registro = context.Administradores.Where(x => x.Id == id).FirstOrDefault();
 
-            //como la categoria esta en la base de datos dentro de registro
-            //y categoria es como quiero que quede despues de hacer la modificacion
 
             if (registro is null)
             {
                 return NotFound("No existe el administrador a modificar");
             }
 
-
-            //actualizacion de los objetos que hay en la base de datos con los que hay en el cuerpo(body)
 
             registro.Nombre = administrador.Nombre;
             registro.NumeroTelefono = administrador.NumeroTelefono;
@@ -71,7 +67,7 @@ namespace Prueba.Server.Controllers
             try
             {
 
-                context.Administradores.Update(registro);//si mando aca dentro de update, al objeto categorias, no va a haber conexion con la base de datos
+                context.Administradores.Update(registro);
                 context.SaveChanges();
                 return Ok();
 

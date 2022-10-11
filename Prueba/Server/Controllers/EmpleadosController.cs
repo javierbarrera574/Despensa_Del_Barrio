@@ -19,7 +19,7 @@ namespace Prueba.Server.Controllers
 
 
 
-        [HttpGet]//esta bien
+        [HttpGet]
         public async Task<ActionResult<List<Empleado>>> Get()
         {
 
@@ -30,36 +30,6 @@ namespace Prueba.Server.Controllers
         }
 
 
-        #region
-        //[HttpGet("id:int")]
-
-        //public async Task<ActionResult<Empleado>> GetBuscar(int id)
-        //{
-
-        //    var empleado = await context.Empleado.
-        //        Where(x => x.Id == id).
-        //        Include(p => p.NombreEmpleado).
-        //        Include(x=>x.EdadEmpleado).
-        //        Include(f=>f.FechaNacimiento).
-        //        Include(d=>d.Domicilio).
-        //        Include(t=>t.NumeroTelefono).
-        //        Include(d=>d.DNI).
-        //        FirstOrDefaultAsync();
-
-        //    if (empleado is null)
-        //    {
-        //        return NotFound($"No se encontro el administrador de Id: {id}");
-        //    }
-
-        //    return empleado;
-
-
-        //}
-
-        #endregion
-
-
-        [HttpPost]
 
         public async Task<ActionResult<int>> post(Empleado empleado)
         {
@@ -107,8 +77,6 @@ namespace Prueba.Server.Controllers
 
             var registro = context.Empleados.Where(x => x.Id == id).FirstOrDefault();
 
-            //como la categoria esta en la base de datos dentro de registro
-            //y categoria es como quiero que quede despues de hacer la modificacion
 
             if (registro is null)
             {
@@ -116,7 +84,6 @@ namespace Prueba.Server.Controllers
             }
 
 
-            //actualizacion de los objetos que hay en la base de datos con los que hay en el cuerpo(body)
 
             registro.Nombre = empleado.Nombre;
             registro.Apellido = empleado.Apellido;
@@ -128,7 +95,7 @@ namespace Prueba.Server.Controllers
             try
             {
 
-                context.Empleados.Update(registro);//si mando aca dentro de update, al objeto categorias, no va a haber conexion con la base de datos
+                context.Empleados.Update(registro);
                 context.SaveChanges();
                 return Ok();
 
