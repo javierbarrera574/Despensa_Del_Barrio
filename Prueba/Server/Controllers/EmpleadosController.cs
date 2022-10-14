@@ -29,7 +29,7 @@ namespace Prueba.Server.Controllers
 
         }
 
-
+        [HttpPost]
 
         public async Task<ActionResult<int>> post(Empleado empleado)
         {

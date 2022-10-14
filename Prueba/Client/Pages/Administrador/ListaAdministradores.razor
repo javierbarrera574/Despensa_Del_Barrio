@@ -1,0 +1,77 @@
+﻿@page "/Administradores"
+@inject IHttpService http
+
+
+<h3>Lista de Administradores</h3>
+
+
+<table>
+
+      <tr>
+        <th>Nombre</th>
+        <th>Telefono</th>
+      </tr>
+
+    @if (administradores == null)
+    {
+        <tr>Cargando...</tr>
+    }
+
+    else if(administradores.Count==0)
+    {
+        <tr>No existen datos para cargar</tr>
+    }
+
+
+    @foreach(var elemento in administradores)
+    {
+        <tr>
+            <td>@elemento.Nombre</td>
+            <td>@elemento.NumeroTelefono</td>
+        </tr>
+    }
+
+
+</table>
+
+
+
+@code
+{
+
+
+    List<Administrador> administradores=new List<Administrador>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        base.OnInitializedAsync();
+
+        await Leer();
+
+    }
+
+    private async Task Leer()
+    {
+
+        var respuesta = await http.Get<List<Administrador>>("api/Administradores");
+        {
+            //<T> es la lista de Administradores
+
+            if (!respuesta.Error)
+            {
+                administradores = respuesta.Respuesta;
+            }
+
+    
+        }
+
+    }
+
+
+
+}
+
+
+
