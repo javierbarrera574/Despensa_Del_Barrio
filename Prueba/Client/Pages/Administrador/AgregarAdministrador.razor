@@ -1,0 +1,30 @@
+﻿@page "/Administradores/agregar"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+
+<h3>Nuevo administrador</h3>
+
+<AdministradorFormulario administradores="administrador" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+@code
+{
+    private Administrador administrador = new Administrador();
+
+    private async void Grabar()
+    {
+        var httprespuesta = await http.Post<Administrador>("api/Administradores", administrador);
+
+        if (httprespuesta.Error)
+        {
+            var body = httprespuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Administradores");
+
+    }
+
+    private void Cancelar() => navigationmanager.NavigateTo("/Administradores");
+    
+}

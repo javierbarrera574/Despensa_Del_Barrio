@@ -6,12 +6,12 @@ namespace Prueba.BD.Datos.Entidades
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="El campo tipo de categoria es obligatorio")]
 
         public string TipoCategoria { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage ="El campo codigo de categoria es obligatorio")]
 
         public string CodigoCategoria { get; set; }
 

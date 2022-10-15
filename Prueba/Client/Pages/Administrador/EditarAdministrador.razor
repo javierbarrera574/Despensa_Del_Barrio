@@ -1,0 +1,54 @@
+﻿@page "/Administradores/Editar{administradorId:int}"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+<h3 
+    Editar administrador>
+</h3>>
+
+<AdministradorFormulario administradores="administrador" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+@code
+{
+    private Administrador administrador = new Administrador();
+
+    [Parameter] public int administradorId { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        await Mostrar();
+
+    }
+
+
+
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Administrador>($"api/Administradores{administradorId}");
+
+        if (!respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+
+        else
+        {
+            administrador = respuesta.Respuesta;
+        }
+    }
+
+
+    private void Grabar()
+    {
+
+    }
+
+    private void Cancelar()
+    {
+        navigationmanager.NavigateTo("api/Administradores");
+    }
+}

@@ -7,15 +7,15 @@ namespace Prueba.BD.Datos.Entidades
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="El campo nombre del proveedor es obligatorio")]
         public string Nombre { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage ="El campo correo es obligatorio")]
         public string CorreoElectronico { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage ="El campo numero de telefono es obligatorio")]
 
         public string NumeroTelefono { get; set; }
 

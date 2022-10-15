@@ -6,13 +6,13 @@
         //instancio la clase segun el tipo, y la respuesta(objeto) tiene que ser del mismo tipo
         public T Respuesta { get; }
         public bool Error { get; }
-        public HttpResponseMessage HttpResponse { get; }
-        public HttpRespuesta(T respuesta, bool error, HttpResponseMessage httpResponse)
+        public HttpResponseMessage HttpResponseMessage { get; }
+        public HttpRespuesta(T respuesta, bool error, HttpResponseMessage httpResponseMessage)
         {
             //son propiedades, no campos
             Respuesta = respuesta;
             Error = error;
-            HttpResponse = httpResponse;
+            HttpResponseMessage = httpResponseMessage;
         }
 
      

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text;
 
 namespace Prueba.Client.Servicios
 {
@@ -41,7 +42,30 @@ namespace Prueba.Client.Servicios
 
         }
 
-        private async Task<T> DeserializarRespuesta<T>(HttpResponseMessage Response)
+        public async Task<HttpRespuesta<object>> Post<T>(string url, T enviar)
+        {
+            try
+            {
+                var jsonEnviar = JsonSerializer.Serialize(enviar);
+
+                var enviarContent = new StringContent(jsonEnviar,
+                    Encoding.UTF8, "application/json");
+
+                var respuesta = await http.PostAsync(url, enviarContent);
+
+
+                return new HttpRespuesta<object>(null,!respuesta.IsSuccessStatusCode, respuesta);
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+
+        private static async Task<T> DeserializarRespuesta<T>(HttpResponseMessage Response)
         {
             var respuestaString = await Response.Content.ReadAsStringAsync();
 
@@ -51,10 +75,7 @@ namespace Prueba.Client.Servicios
             //y a esta respuesta la tengo que serializar
 
             return JsonSerializer.Deserialize<T>(respuestaString,
-                new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true,
-                });
+                new JsonSerializerOptions(){PropertyNameCaseInsensitive = true,});
 
         }
     }
