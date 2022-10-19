@@ -1,17 +1,17 @@
-﻿@page "/Administradores/Editar/{administradorId:int}"
+﻿@page "/Categorias/Editar/{categoriaId:int}"
 @inject IHttpService http
 @inject NavigationManager navigationmanager
 
-<h3>Editar administrador></h3>>
+<h3>Editar categoria></h3>>
 
-<AdministradorFormulario administradores="administrador" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+<FormularioCategoria categorias="categoria" onCancel="Cancelar" onvalidsubmit="Grabar"/>
 
 
 @code
 {
-    private Administrador administrador = new Administrador();
+    private Categoria categoria = new Categoria();
 
-    [Parameter] public int administradorId { get; set; }
+    [Parameter] public int categoriaId { get; set; }
 
 
     protected async override Task OnInitializedAsync()
@@ -23,7 +23,7 @@
 
     private async Task Mostrar()
     {
-        var respuesta = await http.Get<Administrador>($"api/Administradores/{administradorId}");
+        var respuesta = await http.Get<Categoria>($"api/Categorias/{categoriaId}");
 
         if (respuesta.Error)
         {
@@ -32,14 +32,14 @@
 
         else
         {
-            administrador = respuesta.Respuesta;
+            categoria = respuesta.Respuesta;
         }
     }
 
     private async void Grabar()
     {
-        var respuesta = await http.Put<Administrador>($"api/Administradores/{administradorId}"
-        , administrador);
+        var respuesta = await http.Put<Categoria>($"api/Administradores/{categoriaId}"
+        , categoria);
 
         if (respuesta.Error)
         {

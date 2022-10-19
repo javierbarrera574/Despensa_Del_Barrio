@@ -1,0 +1,56 @@
+﻿@page "/Depositos/Editar/{DepositoId:int}"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+<h3>Editar administrador></h3>>
+
+<FormularioDeposito deposito="detalleDeposito" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+@code
+{
+    private Deposito detalleDeposito = new Deposito();
+
+    [Parameter] public int depositoId { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        await Mostrar();
+
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Deposito>($"api/Depositos/{depositoId}");
+
+        if (respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+
+        else
+        {
+            detalleDeposito = respuesta.Respuesta;
+        }
+    }
+
+    private async void Grabar()
+    {
+        var respuesta = await http.Put<Deposito>($"api/Depositos/{depositoId}"
+        , detalleDeposito);
+
+        if (respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Depositos");
+    }
+
+    private void Cancelar()
+    {
+        navigationmanager.NavigateTo("api/Depositos");
+    }
+}

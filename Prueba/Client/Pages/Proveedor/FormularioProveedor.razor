@@ -1,0 +1,34 @@
+﻿<EditForm Model="proveedores" OnValidSubmit="onvalidsubmit">
+    <DataAnnotationsValidator/>
+    <div class="form-group">
+        <label>Nombre proveedor</label>>
+        <div>
+            <InputText class="form-control" @bind-Value="@proveedores.Nombre"/>
+            <ValidationMessage For="@(()=>proveedores.Nombre)"/>
+        </div>      
+    </div>
+    <div class="form-group">
+        <label>Correo proveedor</label>>
+          <div>
+            <InputText class="form-control" @bind-Value="@proveedores.CorreoElectronico"/>
+            <ValidationMessage For="@(()=>proveedores.CorreoElectronico)" />
+        </div>
+    </div>
+     <div class="form-group">
+        <label>Numero proveedor</label>>
+          <div>
+            <InputText class="form-control" @bind-Value="@proveedores.NumeroTelefono"/>
+            <ValidationMessage For="@(()=>proveedores.NumeroTelefono)" />
+        </div>
+    </div>
+     <button class="btn btn-primary" type="submit" >Aceptar</button>
+     <button class="btn btn-secondary" @onclick="onCancel">Cancelar</button>
+</EditForm>>
+
+
+@code 
+{
+    [Parameter] public Proveedor proveedores { get; set;}
+    [Parameter] public EventCallback onvalidsubmit { get; set;}
+    [Parameter] public EventCallback onCancel { get; set; }
+}

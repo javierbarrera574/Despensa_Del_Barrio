@@ -1,0 +1,30 @@
+﻿@page "/Categorias/agregar"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+
+<h3>Nuevo administrador</h3>
+
+<FormularioCategoria administradores="categoria" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+@code
+{
+    private Categoria categoria = new Categoria();
+
+    private async void Grabar()
+    {
+        var httprespuesta = await http.Post<Categoria>("api/Administradores", categoria);
+
+        if (httprespuesta.Error)
+        {
+            var body = httprespuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Administradores");
+
+    }
+
+    private void Cancelar() => navigationmanager.NavigateTo("/Administradores");
+    
+}

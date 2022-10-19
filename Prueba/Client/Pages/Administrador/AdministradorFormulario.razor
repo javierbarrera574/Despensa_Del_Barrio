@@ -1,57 +1,28 @@
-﻿@page "/Editar/Administrador"
-@inject IHttpService http
-@inject NavigationManager navigationmanager
-
-
-
-<h3>Editar Administrador</h3>
-
-<EditForm Model="administradores" OnValidSubmit="onvalidsubmit">
-
+﻿<EditForm Model="administradores" OnValidSubmit="onvalidsubmit">
     <DataAnnotationsValidator/>
-
     <div class="form-group">
-        <label>
-            Nombre
-        </label>>
-
+        <label>Nombre</label>>
         <div>
             <InputText class="form-control" @bind-Value="@administradores.Nombre"/>
             <ValidationMessage For="@(()=>administradores.Nombre)"/>
+        </div>      
     </div>
-
-     <div class="form-group">
-
-        <label>
-            Numero de telefono
-        </label>>
-
+    <div class="form-group">
+        <label>Numero de telefono</label>>
           <div>
             <InputText class="form-control" @bind-Value="@administradores.NumeroTelefono"/>
-            <ValidationMessage For="@(()=>administradores.NumeroTelefono)"/>
+            <ValidationMessage For="@(()=>administradores.NumeroTelefono)" />
         </div>
-
     </div>
-
-    </div>
-
-    <br/>
-
-     <button class="btn btn primary" type="submit" >Aceptar</button>>
-
-     <buttonc class="btn btn primary" @onclick="onCancel">Cancelar</buttonc>>
-
-
-    
+    <br />
+     <button class="btn btn-primary" type="submit" >Aceptar</button>
+     <button class="btn btn-secondary" @onclick="onCancel">Cancelar</button>
 </EditForm>>
 
 
 @code 
 {
-
     [Parameter] public Administrador administradores { get; set;}
-
     [Parameter] public EventCallback onvalidsubmit { get; set;}
-
     [Parameter] public EventCallback onCancel { get; set; }
 }

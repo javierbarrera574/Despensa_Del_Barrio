@@ -1,0 +1,30 @@
+﻿@page "/Productos/agregar"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+
+<h3>Nuevo producto</h3>
+
+<FormularioProducto productos="producto" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+@code
+{
+    private Producto producto = new Producto();
+
+    private async void Grabar()
+    {
+        var httprespuesta = await http.Post<Producto>("api/Productos", producto);
+
+        if (httprespuesta.Error)
+        {
+            var body = httprespuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Productos");
+
+    }
+
+    private void Cancelar() => navigationmanager.NavigateTo("/Productos");
+    
+}

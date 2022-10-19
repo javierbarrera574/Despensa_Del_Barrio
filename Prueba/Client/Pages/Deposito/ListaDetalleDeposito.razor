@@ -1,40 +1,43 @@
-﻿@page "/Administradores"
+﻿@page "/Deposito"
 @inject IHttpService http
 
 <a class="btn btn primary" href="Administradores/agregar">Nuevo administrador</a>
 
 
-<h3>Lista de Administradores</h3>
+<h3>Lista detalle del deposito</h3>
 
 
 <table>
 
       <tr>
-        <th>Nombre</th>
-        <th>Telefono</th>
+        <th>Codigo</th>
+        <th>Categoria</th> 
+        <th>Cantidad</th>
+
       </tr>
 
     
-      @if (administradores == null)
+      @if (depositos == null)
       {
         <tr>Cargando.......</tr>
     
       }
-      else if(administradores.Count==0)
+      else if(depositos.Count==0)
       {
         <tr>No existen datos para cargar</tr>
     
       }
       else        
       {
-          @foreach(var elemento in administradores)
+          @foreach(var elemento in depositos)
           {
               <tr>
-                  <td>@elemento.Nombre</td>
-                  <td>@elemento.NumeroTelefono</td>
+                  <td>@elemento.CodigoEstante</td>
+                  <td>@elemento.CategoriaEnEstante</td>
+                  <td>@elemento.CantidadEnEstante</td>
                   <td>
                       <a class="btn btn primary" 
-                          href="Administradores/Editar/@elemento.Id">
+                          href="Depositos/Editar/@elemento.Id">
                           Editar
                       </a>
                   </td>>
@@ -54,11 +57,11 @@
               verCancelar="true"
               verOk="true"
               textOk="Aceptar"
-              Titulo="Borrar administrador"
+              Titulo="Borrar detalle del deposito"
               onCancel="Cancelar"
               onConfirm="Borrar">
               <div>
-                  Está por borrar el administrador:  @AdministradorBorrar.Nombre
+                  Está por borrar el detalle del deposito:  @DepositoBorrar.CodigoEstante
                   <br />
                   ¿Está seguro que desea continuar?
               </div>
@@ -67,11 +70,11 @@
 
 @code
 {
-    List<Administrador> administradores=new List<Administrador>();
+    List<Deposito> depositos=new List<Deposito>();
 
     Funcionar funcionConfirmacion;
 
-    Administrador AdministradorBorrar;
+    Deposito DepositoBorrar;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,34 +88,34 @@
     private async Task Leer()
     {
 
-        var respuesta = await http.Get<List<Administrador>>("api/Administradores");
+        var respuesta = await http.Get<List<Deposito>>("api/Administradores");
         {
             //<T> es la lista de Administradores
 
             if (!respuesta.Error)
             {
-                administradores = respuesta.Respuesta;
+                depositos = respuesta.Respuesta;
             }
         }
     }
 
-    private void Eliminar(Administrador administradorBorrar)
+    private void Eliminar(Deposito depositoBorrar)
     {
-        AdministradorBorrar = administradorBorrar;
+        DepositoBorrar = depositoBorrar;
         funcionConfirmacion.Ver();
     }
 
        private void Cancelar()
     {
         funcionConfirmacion.Ocultar();
-        AdministradorBorrar = null;
+        DepositoBorrar = null;
     }
 
 
     private async Task Borrar()
     {
 
-        var respuesta = await http.Delete($"api/Especialidades/{AdministradorBorrar.Id}");
+        var respuesta = await http.Delete($"api/Especialidades/{DepositoBorrar.Id}");
 
         if(respuesta.Error)
         {

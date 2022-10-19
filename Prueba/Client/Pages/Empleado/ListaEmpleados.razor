@@ -4,37 +4,42 @@
 <a class="btn btn primary" href="Administradores/agregar">Nuevo administrador</a>
 
 
-<h3>Lista de Administradores</h3>
+<h3>Lista de Empleados</h3>
 
 
 <table>
 
       <tr>
         <th>Nombre</th>
-        <th>Telefono</th>
+        <th>Apellido</th>        
+        <th>Edad</th>
+
       </tr>
 
+
     
-      @if (administradores == null)
+      @if (empleados == null)
       {
         <tr>Cargando.......</tr>
     
       }
-      else if(administradores.Count==0)
+      else if(empleados.Count==0)
       {
         <tr>No existen datos para cargar</tr>
     
       }
       else        
       {
-          @foreach(var elemento in administradores)
+          @foreach(var elemento in empleados)
           {
               <tr>
                   <td>@elemento.Nombre</td>
-                  <td>@elemento.NumeroTelefono</td>
+                  <td>@elemento.Apellido</td>                  
+                  <td>@elemento.Edad</td>
+
                   <td>
                       <a class="btn btn primary" 
-                          href="Administradores/Editar/@elemento.Id">
+                          href="Empleados/Editar/@elemento.Id">
                           Editar
                       </a>
                   </td>>
@@ -58,7 +63,7 @@
               onCancel="Cancelar"
               onConfirm="Borrar">
               <div>
-                  Está por borrar el administrador:  @AdministradorBorrar.Nombre
+                  Está por borrar el administrador:  @EmpleadoBorrar.Nombre
                   <br />
                   ¿Está seguro que desea continuar?
               </div>
@@ -67,11 +72,11 @@
 
 @code
 {
-    List<Administrador> administradores=new List<Administrador>();
+    List<Empleado> empleados=new List<Empleado>();
 
     Funcionar funcionConfirmacion;
 
-    Administrador AdministradorBorrar;
+    Empleado EmpleadoBorrar;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,34 +90,34 @@
     private async Task Leer()
     {
 
-        var respuesta = await http.Get<List<Administrador>>("api/Administradores");
+        var respuesta = await http.Get<List<Empleado>>("api/Administradores");
         {
             //<T> es la lista de Administradores
 
             if (!respuesta.Error)
             {
-                administradores = respuesta.Respuesta;
+                empleados = respuesta.Respuesta;
             }
         }
     }
 
-    private void Eliminar(Administrador administradorBorrar)
+    private void Eliminar(Empleado empleadoBorrar)
     {
-        AdministradorBorrar = administradorBorrar;
+        EmpleadoBorrar = empleadoBorrar;
         funcionConfirmacion.Ver();
     }
 
        private void Cancelar()
     {
         funcionConfirmacion.Ocultar();
-        AdministradorBorrar = null;
+        EmpleadoBorrar = null;
     }
 
 
     private async Task Borrar()
     {
 
-        var respuesta = await http.Delete($"api/Especialidades/{AdministradorBorrar.Id}");
+        var respuesta = await http.Delete($"api/Especialidades/{EmpleadoBorrar.Id}");
 
         if(respuesta.Error)
         {

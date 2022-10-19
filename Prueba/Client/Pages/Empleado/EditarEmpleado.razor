@@ -1,0 +1,57 @@
+﻿@page "/Empleados/Editar/{empleadoId:int}"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+<h3>Editar empleado></h3>>
+
+<FormularioEmpleado empleados = "empleado"  onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+
+@code
+{
+    private Empleado empleado = new Empleado();
+
+    [Parameter] public int empleadoId { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        await Mostrar();
+
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Empleado>($"api/Empleados/{empleadoId}");
+
+        if (respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+
+        else
+        {
+            empleado = respuesta.Respuesta;
+        }
+    }
+
+    private async void Grabar()
+    {
+        var respuesta = await http.Put<Empleado>($"api/Empleados/{empleadoId}"
+        , empleado);
+
+        if (respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Empleados");
+    }
+
+    private void Cancelar()
+    {
+        navigationmanager.NavigateTo("api/Empleados");
+    }
+}

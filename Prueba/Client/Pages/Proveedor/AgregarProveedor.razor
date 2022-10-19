@@ -1,0 +1,32 @@
+﻿@page "/Proveedores/agregar"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+
+<h3>Nuevo detalle deposito</h3>
+
+
+<FormularioProveedor proveedores="proveedor" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+
+@code
+{
+    private Proveedor proveedor = new Proveedor();
+
+    private async void Grabar()
+    {
+        var httprespuesta = await http.Post<Proveedor>("api/Proveedores", proveedor);
+
+        if (httprespuesta.Error)
+        {
+            var body = httprespuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Proveedores");
+
+    }
+
+    private void Cancelar() => navigationmanager.NavigateTo("/Proveedores");
+    
+}

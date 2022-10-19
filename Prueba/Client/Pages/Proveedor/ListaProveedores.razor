@@ -1,40 +1,42 @@
-﻿@page "/Administradores"
+﻿@page "/Proveedores"
 @inject IHttpService http
 
-<a class="btn btn primary" href="Administradores/agregar">Nuevo administrador</a>
+<a class="btn btn primary" href="Proveedores/agregar">Nueva proveedor</a>
 
 
-<h3>Lista de Administradores</h3>
+<h3>Lista de proveedores</h3>
 
 
 <table>
 
       <tr>
         <th>Nombre</th>
-        <th>Telefono</th>
+        <th>Correo</th>
+        <th>Numero</th>
       </tr>
 
     
-      @if (administradores == null)
+      @if (proveedores == null)
       {
         <tr>Cargando.......</tr>
     
       }
-      else if(administradores.Count==0)
+      else if(proveedores.Count==0)
       {
         <tr>No existen datos para cargar</tr>
     
       }
       else        
       {
-          @foreach(var elemento in administradores)
+          @foreach(var elemento in proveedores)
           {
               <tr>
                   <td>@elemento.Nombre</td>
+                  <td>@elemento.CorreoElectronico</td>
                   <td>@elemento.NumeroTelefono</td>
                   <td>
                       <a class="btn btn primary" 
-                          href="Administradores/Editar/@elemento.Id">
+                          href="Proveedores/Editar/@elemento.Id">
                           Editar
                       </a>
                   </td>>
@@ -54,11 +56,11 @@
               verCancelar="true"
               verOk="true"
               textOk="Aceptar"
-              Titulo="Borrar administrador"
+              Titulo="Borrar proveedor"
               onCancel="Cancelar"
               onConfirm="Borrar">
               <div>
-                  Está por borrar el administrador:  @AdministradorBorrar.Nombre
+                  Está por borrar el proveedor:  @ProveedorBorrar.Nombre
                   <br />
                   ¿Está seguro que desea continuar?
               </div>
@@ -67,11 +69,11 @@
 
 @code
 {
-    List<Administrador> administradores=new List<Administrador>();
+    List<Proveedor> proveedores=new List<Proveedor>();
 
     Funcionar funcionConfirmacion;
 
-    Administrador AdministradorBorrar;
+    Proveedor ProveedorBorrar;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,34 +87,35 @@
     private async Task Leer()
     {
 
-        var respuesta = await http.Get<List<Administrador>>("api/Administradores");
+        var respuesta = await http.Get<List<Proveedor>>("api/Proveedores");
         {
             //<T> es la lista de Administradores
 
             if (!respuesta.Error)
             {
-                administradores = respuesta.Respuesta;
+                proveedores = respuesta.Respuesta;
             }
         }
     }
 
-    private void Eliminar(Administrador administradorBorrar)
+    private void Eliminar(Proveedor proveedorBorrar)
     {
-        AdministradorBorrar = administradorBorrar;
+        ProveedorBorrar = proveedorBorrar;
         funcionConfirmacion.Ver();
     }
 
        private void Cancelar()
-    {
-        funcionConfirmacion.Ocultar();
-        AdministradorBorrar = null;
-    }
+       {
+           funcionConfirmacion.Ocultar();
+        
+           ProveedorBorrar = null;
+       }
 
 
     private async Task Borrar()
     {
 
-        var respuesta = await http.Delete($"api/Especialidades/{AdministradorBorrar.Id}");
+        var respuesta = await http.Delete($"api/Proveedores/{ProveedorBorrar.Id}");
 
         if(respuesta.Error)
         {

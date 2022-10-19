@@ -1,0 +1,30 @@
+﻿@page "/Categorias/agregar"
+@inject IHttpService http
+@inject NavigationManager navigationmanager
+
+
+<h3>Nuevo empleado</h3>
+
+<FormularioEmpleado empleados="empleado" onCancel="Cancelar" onvalidsubmit="Grabar"/>
+
+
+@code
+{
+    private Empleado empleado = new Empleado();
+
+    private async void Grabar()
+    {
+        var httprespuesta = await http.Post<Empleado>("api/Empleados", empleado);
+
+        if (httprespuesta.Error)
+        {
+            var body = httprespuesta.HttpResponseMessage;
+        }
+
+        navigationmanager.NavigateTo("/Empleados");
+
+    }
+
+    private void Cancelar() => navigationmanager.NavigateTo("/Empleados");
+    
+}
