@@ -112,7 +112,7 @@
     private async Task Borrar()
     {
 
-        var respuesta = await http.Delete($"api/Especialidades/{AdministradorBorrar.Id}");
+        var respuesta = await http.Delete($"api/Administradores/{AdministradorBorrar.Id}");
 
         if(respuesta.Error)
         {

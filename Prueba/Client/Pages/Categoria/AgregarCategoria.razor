@@ -1,4 +1,4 @@
-﻿@page "/Categorias/agregar"
+﻿@page "/Categorias/Agregar"
 @inject IHttpService http
 @inject NavigationManager navigationmanager
 
@@ -14,17 +14,17 @@
 
     private async void Grabar()
     {
-        var httprespuesta = await http.Post<Categoria>("api/Administradores", categoria);
+        var httprespuesta = await http.Post<Categoria>("api/Categorias", categoria);
 
         if (httprespuesta.Error)
         {
             var body = httprespuesta.HttpResponseMessage;
         }
 
-        navigationmanager.NavigateTo("/Administradores");
+        navigationmanager.NavigateTo("/Categorias");
 
     }
 
-    private void Cancelar() => navigationmanager.NavigateTo("/Administradores");
+    private void Cancelar() => navigationmanager.NavigateTo("/Categorias");
     
 }

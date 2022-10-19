@@ -1,10 +1,10 @@
-﻿@page "/Administradores"
+﻿@page "/Empleados"
 @inject IHttpService http
 
-<a class="btn btn primary" href="Administradores/agregar">Nuevo administrador</a>
+<a class="btn btn primary" href="Empleados/agregar">Nuevo empleado</a>
 
 
-<h3>Lista de Empleados</h3>
+<h3>Lista de empleados</h3>
 
 
 <table>
@@ -59,7 +59,7 @@
               verCancelar="true"
               verOk="true"
               textOk="Aceptar"
-              Titulo="Borrar administrador"
+              Titulo="Borrar empleado"
               onCancel="Cancelar"
               onConfirm="Borrar">
               <div>
@@ -90,7 +90,7 @@
     private async Task Leer()
     {
 
-        var respuesta = await http.Get<List<Empleado>>("api/Administradores");
+        var respuesta = await http.Get<List<Empleado>>("api/Empleados");
         {
             //<T> es la lista de Administradores
 
@@ -117,7 +117,7 @@
     private async Task Borrar()
     {
 
-        var respuesta = await http.Delete($"api/Especialidades/{EmpleadoBorrar.Id}");
+        var respuesta = await http.Delete($"api/Empleados/{EmpleadoBorrar.Id}");
 
         if(respuesta.Error)
         {
